@@ -1,0 +1,27 @@
+{
+  "name": "@fleetos/scheduler",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetOS scheduling core — risk-aware planner, rule-based baseline, assigned envelopes for device agents, and the deterministic benchmark harness",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./bench": "./src/bench/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "bench:scenario": "tsx src/bench/cli.ts",
+    "bench:all": "tsx src/bench/cli.ts --all"
+  },
+  "dependencies": {
+    "@fleetos/constraints": "workspace:*",
+    "@fleetos/core-schema": "workspace:*",
+    "@fleetos/world-model": "workspace:*"
+  },
+  "devDependencies": {
+    "@fleetos/adapters-sdk": "workspace:*",
+    "tsx": "^4.19.2",
+    "vitest": "^3.2.4"
+  }
+}
