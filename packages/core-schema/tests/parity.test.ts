@@ -11,7 +11,7 @@ import { fixturesFor } from "./valid-fixtures.js";
 
 // ajv-formats ships a CJS module with an ESM-style declaration; under
 // nodenext the default binding's type resolves to the module namespace,
-// so pin the call signature we rely on. (Same shim as IntentVisible.)
+// so pin the call signature we rely on.
 type AddFormats = (ajv: Ajv2020) => void;
 const addFormats = addFormatsDefault as unknown as AddFormats;
 
@@ -30,7 +30,7 @@ function loadSchema(name: SchemaName): SchemaObject {
  * Ajv/Zod parity: each checked-in JSON Schema document (published for non-TS
  * consumers) and its Zod source must accept/reject the same samples. Zod-only
  * invariants (cross-field ordering) are excluded — they are asserted against
- * Zod in the round-trip suite, mirroring the IntentVisible pattern.
+ * Zod in the round-trip suite.
  */
 describe("published JSON Schemas (Ajv draft 2020-12)", () => {
   const ajv = makeAjv();

@@ -6,8 +6,8 @@ import type { SchemaName } from "../src/json-schema.js";
  * JSON Schema file (Ajv) — that is the parity contract.
  *
  * `zodOnly: true` marks rules JSON Schema cannot express (cross-field
- * ordering): they are asserted against Zod only, mirroring the IntentVisible
- * pattern for Zod-only invariants.
+ * ordering): they are asserted against Zod only; JSON Schema parity does not
+ * cover Zod-only invariants.
  */
 export interface InvalidSample {
   readonly schemaName: SchemaName;
