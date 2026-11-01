@@ -1,3 +1,9 @@
 packages:
   - "packages/*"
   - "apps/*"
+
+# pnpm 12 blocks dependency lifecycle scripts by default (supply-chain guard);
+# esbuild (a transitive dep of Vite/Vitest) needs its postinstall to place its
+# platform binary.
+allowBuilds:
+  esbuild: true
