@@ -91,7 +91,10 @@ async function seedTasks(now: string): Promise<void> {
   for (const task of demoTasks) {
     await call<CreatedTask>("POST", "/tasks", {
       ...task,
-      window: { notBefore: now, notAfter: hoursFrom(now, 10) },
+      // Not-before one sim-hour out: the committed plan's first (envelope)
+      // assignments start with operator-scale headroom instead of at the next
+      // tick, so the weather-hold proposal window is reachable at demo pace.
+      window: { notBefore: hoursFrom(now, 1), notAfter: hoursFrom(now, 10) },
     });
   }
 }
@@ -215,11 +218,13 @@ async function watchForWeatherHoldTarget(): Promise<void> {
   if (!response.ok) return; // No committed plan yet — nothing to trigger on.
   const body = (await response.json()) as PlanWatch;
   if (body.plan.status !== "committed" || body.plan.planId === lastWeatherHeldPlanId) return;
-  // Target the not-yet-started assignment with the LATEST start — maximum
-  // wall-clock headroom before the work begins and a start shift is moot.
+  // Target the not-yet-started assignment with the EARLIEST start. A device
+  // agent shifts its envelope's first assignment (the plan's earliest task for
+  // that robot), so the hold must land on that task before it begins — the
+  // seeded one-hour not-before window is the operator's headroom.
   const candidates = body.plan.plan.plan.assignments
     .filter((a) => Date.parse(a.startAt) > Date.parse(demoClock.now()))
-    .sort((a, b) => Date.parse(b.startAt) - Date.parse(a.startAt));
+    .sort((a, b) => Date.parse(a.startAt) - Date.parse(b.startAt));
   const target = candidates[0];
   if (target === undefined) return;
   adapterForRobot(target.robotId); // fails fast if the robot has no simulator adapter
