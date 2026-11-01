@@ -1,0 +1,20 @@
+{
+  "name": "@fleetos/constraints",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetOS external constraint packs — semantic validation, effective-date versioning, and the approval-gated scheduler ingestion seam",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fleetos/core-schema": "workspace:*"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}
