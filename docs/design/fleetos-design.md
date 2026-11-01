@@ -291,7 +291,7 @@ Scope note (locked decision): legal review and OEM-specific compliance advice ar
 
 ## 10. Stack and repository layout
 
-TypeScript ESM pnpm monorepo, Node ≥20, vitest, eslint — mirroring the owner's `IntentVisible` conventions so CI and review patterns carry over. `apps/api` is Fastify with SQLite persistence; `apps/console` is React (Vite). Simulation keeps everything deterministic; no external services are required to run the full benchmark.
+TypeScript ESM pnpm monorepo, Node ≥20, vitest, eslint — conventions shared across the owner's repositories so CI and review patterns carry over. `apps/api` is Fastify with SQLite persistence; `apps/console` is React (Vite). Simulation keeps everything deterministic; no external services are required to run the full benchmark.
 
 ```
 packages/core-schema      capability record v1, task/telemetry/fault schemas,
