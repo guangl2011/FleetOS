@@ -30,8 +30,10 @@ import { NAVIMOW_ROBOTS } from "./registry.js";
  * Vendor quirks modeled here:
  * - cloud RTT: command tickets settle asynchronously — dispatch applies the
  *   effect immediately, then settlement is queued as a microtask (the
- *   modeled cloud round-trip), so a poll within the same dispatch turn sees
- *   "pending" first;
+ *   modeled cloud round-trip). Microtask order means the settlement runs
+ *   before the awaiting sendCommand continuation, so by the time
+ *   sendCommand resolves the ticket is already settled — callers observe
+ *   the final state, not "pending";
  * - a START_TASK with no RTK fix is rejected by the cloud (ticket settles
  *   "failed") and surfaces a normalized SENSOR_DEGRADED fault;
  * - position is only reported with a good RTK fix.
