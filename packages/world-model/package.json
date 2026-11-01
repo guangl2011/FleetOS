@@ -1,0 +1,22 @@
+{
+  "name": "@fleetos/world-model",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetOS world model — digital shadow over the normalized fleet, per-robot confidence estimation, calibration metrics, and the typed prediction seam",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fleetos/constraints": "workspace:*",
+    "@fleetos/core-schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@fleetos/adapters-sdk": "workspace:*",
+    "vitest": "^3.2.4"
+  }
+}

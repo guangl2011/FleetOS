@@ -230,6 +230,22 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@20.19.43)(supports-color@7.2.0)(tsx@4.23.15)
 
+  packages/world-model:
+    dependencies:
+      '@fleetos/constraints':
+        specifier: workspace:*
+        version: link:../constraints
+      '@fleetos/core-schema':
+        specifier: workspace:*
+        version: link:../core-schema
+    devDependencies:
+      '@fleetos/adapters-sdk':
+        specifier: workspace:*
+        version: link:../adapters-sdk
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.7(@types/node@20.19.43)(supports-color@7.2.0)(tsx@4.23.15)
+
 packages:
 
   '@esbuild/aix-ppc64@0.28.2':
