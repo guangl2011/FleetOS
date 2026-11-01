@@ -1,0 +1,23 @@
+{
+  "name": "@fleetos/device-agents",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetOS device agents — one deterministic policy agent per device, grounded in its digital-shadow slice and assigned envelope: fault self-diagnosis, envelope-bounded replan proposals, and human-approved recovery through the audited command path",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fleetos/core-schema": "workspace:*",
+    "@fleetos/scheduler": "workspace:*",
+    "@fleetos/world-model": "workspace:*"
+  },
+  "devDependencies": {
+    "@fleetos/adapters-sdk": "workspace:*",
+    "vitest": "^3.2.4"
+  }
+}
