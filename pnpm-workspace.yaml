@@ -2,8 +2,10 @@ packages:
   - "packages/*"
   - "apps/*"
 
-# pnpm 12 blocks dependency lifecycle scripts by default (supply-chain guard);
+# pnpm 12 blocks dependency lifecycle scripts by default (supply-chain guard).
 # esbuild (a transitive dep of Vite/Vitest) needs its postinstall to place its
-# platform binary.
+# platform binary; better-sqlite3 (apps/api persistence) fetches its native
+# binding (prebuild-install, falling back to a node-gyp source build).
 allowBuilds:
+  better-sqlite3: true
   esbuild: true

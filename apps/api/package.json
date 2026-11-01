@@ -1,0 +1,33 @@
+{
+  "name": "@fleetos/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetOS operator API — Fastify HTTP surface over the fleet: robots, tasks, schedule, benchmark results, exception queue, interventions, agent-proposal decisions, and constraint-pack management; append-only audit middleware on every state change, data-residency routing, and telemetry-field minimization at ingestion",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "tsx src/main.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fleetos/adapters-sdk": "workspace:*",
+    "@fleetos/constraints": "workspace:*",
+    "@fleetos/core-schema": "workspace:*",
+    "@fleetos/device-agents": "workspace:*",
+    "@fleetos/fleet-health": "workspace:*",
+    "@fleetos/scheduler": "workspace:*",
+    "@fleetos/world-model": "workspace:*",
+    "better-sqlite3": "^12.4.1",
+    "fastify": "^5.6.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "tsx": "^4.19.2",
+    "vitest": "^3.2.4"
+  }
+}
