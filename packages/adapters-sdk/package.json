@@ -1,0 +1,21 @@
+{
+  "name": "@fleetos/adapters-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetOS adapter SDK — RobotAdapter contract, lifecycle base, shared contract test harness, and reference in-memory adapter",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fleetos/core-schema": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

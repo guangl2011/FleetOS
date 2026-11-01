@@ -20,3 +20,4 @@ export * from "./intervention.js";
 export * from "./audit.js";
 export * from "./constraints.js";
 export * from "./json-schema.js";
+export * from "./fixtures.js";

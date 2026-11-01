@@ -84,20 +84,25 @@ Schema evolution is additive-only at major version 1; breaking changes bump the 
 
 ## 3. The adapter SDK
 
-One interface per direction of flow. A vendor integration implements `FleetAdapter`; FleetOS core never imports vendor code. Each simulator implements the same interface with an injected fault profile, so adapter contracts are validated in CI the way a physical integration would be:
+One interface per direction of flow. A vendor integration implements `RobotAdapter`; FleetOS core never imports vendor code. Each simulator implements the same interface with an injected fault profile, so adapter contracts are validated in CI the way a physical integration would be:
 
 ```typescript
-export interface FleetAdapter {
+export interface RobotAdapter {
   readonly vendor: string;
   readonly apiVersion: string;
-  listRobots(): Promise<RobotCapabilityRecord[]>;
-  subscribeTelemetry(cb: (t: TelemetryEvent) => void): Unsubscribe;
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+  healthCheck(): Promise<AdapterHealth>;
+  listRobots(): Promise<readonly Robot[]>;
+  subscribeTelemetry(cb: (t: TelemetrySample) => void): Unsubscribe;
   // Every command returns a ticket; result arrives via telemetry or poll.
   sendCommand(cmd: RobotCommand): Promise<CommandTicket>;
   // Normalized fault taxonomy across vendors:
   // BATTERY | STUCK | SENSOR_DEGRADED | COMMS_LOST | WEATHER_HOLD | MAINTENANCE_DUE
-  subscribeFaults(cb: (f: FleetFault) => void): Unsubscribe;
-  healthCheck(): Promise<HealthReport>;
+  subscribeFaults(cb: (f: FaultEvent) => void): Unsubscribe;
+  // Lifecycle stream: connecting | connected | reconnecting | degraded | disconnected
+  subscribeLifecycle(cb: (e: AdapterLifecycleEvent) => void): Unsubscribe;
+  pollTicket(ticketId: string): Promise<CommandTicketState>;
 }
 
 // MVP adapters: GreenworksMowerAdapter, NavimowMowerAdapter,
@@ -291,7 +296,7 @@ TypeScript ESM pnpm monorepo, Node ≥20, vitest, eslint — mirroring the owner
 ```
 packages/core-schema      capability record v1, task/telemetry/fault schemas,
                           compliance block — versioned exports
-packages/adapters-sdk     FleetAdapter contract + 4 simulator adapters
+packages/adapters-sdk     RobotAdapter contract + 4 simulator adapters
 packages/world-model      digital shadow, confidence, prediction seam
 packages/constraints      constraint packs + typed Phase I AI-extraction seam
 packages/device-agents    per-device deterministic policy agents, policy seam
