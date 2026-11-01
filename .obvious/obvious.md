@@ -6,7 +6,8 @@ scheduler → operator console. Simulator-first: everything runs against in-proc
 no physical robot is driven anywhere in this repo. Source of truth for product scope:
 the approved spec "FleetOS MVP and NSF Phase I — Product Spec".
 
-> Status: scaffold + first domain packages (`core-schema`, `constraints`). Remaining domain packages and apps land in follow-up PRs — the planned layout below
+> Status: scaffold + domain packages (`core-schema`, `constraints`, `adapters-sdk`, `world-model`).
+> Remaining domain packages and apps land in follow-up PRs — the planned layout below
 > is the contract new work must fit into.
 
 ## Repo map
@@ -16,10 +17,10 @@ the approved spec "FleetOS MVP and NSF Phase I — Product Spec".
 ├── apps/                 # Deployable applications (planned — follow-up PRs)
 │   ├── api/              #   Fastify API, SQLite persistence
 │   └── console/          #   React (Vite) operator console
-├── packages/             # Shared libraries (core-schema + constraints landed, rest in follow-up PRs)
+├── packages/             # Shared libraries (core-schema, constraints, adapters-sdk, world-model landed)
 │   ├── core-schema/      #   Capability/telemetry/fault schemas — v1, additive-only evolution (landed)
-│   ├── adapters-sdk/     #   FleetAdapter contract + OEM mower/scrubber simulators
-│   ├── world-model/      #   Digital shadow, per-robot confidence, prediction seam
+│   ├── adapters-sdk/     #   FleetAdapter contract + OEM mower/scrubber simulators (landed)
+│   ├── world-model/      #   Digital shadow, per-robot confidence, prediction seam (landed)
 │   ├── constraints/      #   Constraint packs: validation, effective-date versioning, ingestion seam (landed)
 │   ├── device-agents/    #   Per-device deterministic policy agents (bounded autonomy)
 │   ├── scheduler/        #   Risk-aware planner + rule-based baseline + benchmark harness
