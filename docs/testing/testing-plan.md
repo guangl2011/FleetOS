@@ -12,17 +12,17 @@ this plan's completeness and that mapping in CI.
 
 ## 0. Test-class summary
 
-| # | Test class | Owner package(s) | CI gate |
-|---|-----------|------------------|---------|
-| 1 | Unit tests per package | every package | CI — quality job (`.github/workflows/ci.yml`) |
-| 2 | Adapter contract tests | `packages/adapters-sdk` + all four simulators | CI — quality job (`.github/workflows/ci.yml`) |
-| 3 | Deterministic benchmark scenarios (seeded faults, connectivity degradation) | `packages/scheduler`, `packages/world-model` | CI — quality job (`.github/workflows/ci.yml`) |
-| 4 | Scheduler-vs-baseline comparison protocol (quality deltas, confidence-calibration error, energy-cost axis, bounded-autonomy checks) | `packages/scheduler`, `packages/world-model`, `packages/constraints`, `packages/device-agents` | CI — quality job (`.github/workflows/ci.yml`) |
-| 5 | Data-compliance checks | `packages/core-schema`, `apps/api`, `packages/fleet-health` | CI — quality job (`.github/workflows/ci.yml`) |
-| 6 | API integration tests (fault → exception → intervention → audit trail; degraded mode) | `apps/api` | CI — quality job (`.github/workflows/ci.yml`) |
-| 7 | Manual console QA scripts | `apps/console` | not a CI gate — run per the visual-evidence rule; screenshot/recording captured against the tested head SHA |
-| 8 | Doc-lint (this plan) | `tests/docs` | CI — quality job (`.github/workflows/ci.yml`) |
-| — | Secret scanning | repository-wide | Security — gitleaks job (`.github/workflows/security.yml`) |
+| #   | Test class                                                                                                                          | Owner package(s)                                                                               | CI gate                                                                                                     |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 1   | Unit tests per package                                                                                                              | every package                                                                                  | CI — quality job (`.github/workflows/ci.yml`)                                                               |
+| 2   | Adapter contract tests                                                                                                              | `packages/adapters-sdk` + all four simulators                                                  | CI — quality job (`.github/workflows/ci.yml`)                                                               |
+| 3   | Deterministic benchmark scenarios (seeded faults, connectivity degradation)                                                         | `packages/scheduler`, `packages/world-model`                                                   | CI — quality job (`.github/workflows/ci.yml`)                                                               |
+| 4   | Scheduler-vs-baseline comparison protocol (quality deltas, confidence-calibration error, energy-cost axis, bounded-autonomy checks) | `packages/scheduler`, `packages/world-model`, `packages/constraints`, `packages/device-agents` | CI — quality job (`.github/workflows/ci.yml`)                                                               |
+| 5   | Data-compliance checks                                                                                                              | `packages/core-schema`, `apps/api`, `packages/fleet-health`                                    | CI — quality job (`.github/workflows/ci.yml`)                                                               |
+| 6   | API integration tests (fault → exception → intervention → audit trail; degraded mode)                                               | `apps/api`                                                                                     | CI — quality job (`.github/workflows/ci.yml`)                                                               |
+| 7   | Manual console QA scripts                                                                                                           | `apps/console`                                                                                 | not a CI gate — run per the visual-evidence rule; screenshot/recording captured against the tested head SHA |
+| 8   | Doc-lint (this plan)                                                                                                                | `tests/docs`                                                                                   | CI — quality job (`.github/workflows/ci.yml`)                                                               |
+| —   | Secret scanning                                                                                                                     | repository-wide                                                                                | Security — gitleaks job (`.github/workflows/security.yml`)                                                  |
 
 Deliberately out of scope for the MVP: end-to-end tests against physical robots (no
 physical-robot dependency anywhere in the MVP), load testing, browser unit tests for the

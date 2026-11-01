@@ -73,9 +73,7 @@ describe("testing-plan doc-lint", () => {
       "Data-compliance checks",
       "Manual console QA scripts",
     ]) {
-      expect(
-        headings.some((h) => h.toLowerCase().includes(required.toLowerCase())),
-      ).toBe(true);
+      expect(headings.some((h) => h.toLowerCase().includes(required.toLowerCase()))).toBe(true);
     }
   });
 
