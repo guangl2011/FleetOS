@@ -21,9 +21,9 @@ describe("FleetOS workspace scaffold", () => {
   });
 
   it("requires Node >= 20 in the root package.json", () => {
-    const pkg = JSON.parse(
-      readFileSync(new URL("../package.json", import.meta.url), "utf8"),
-    ) as { engines?: { node?: string } };
+    const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as {
+      engines?: { node?: string };
+    };
     expect(pkg.engines?.node).toBe(">=20");
   });
 });
