@@ -1,5 +1,6 @@
 import type { Robot, TelemetrySample } from "@fleetos/core-schema";
 
+import type { HusqvarnaFaultCode } from "./device.js";
 import { ManualClock } from "../../clock.js";
 import type { CommandTicket } from "../../adapter.js";
 import {
@@ -88,6 +89,19 @@ export class HusqvarnaMowerAdapter extends BaseRobotAdapter {
     this.emitTransportFault(primary, "simulated connection drop before token refresh");
     this.emitVendorFault(secondary, "H04_WEATHER_TIMER");
     this.emitVendorFault(primary, "H05_SERVICE_DUE");
+  }
+
+  /**
+   * Targeted scenario driver: emit one vendor-conformant fault on a specific
+   * robot on demand (contract suite, demo harness) — the seeded profiles and
+   * schedules fire on fixed or derived robots only.
+   */
+  injectVendorFault(
+    robotId: string,
+    code: HusqvarnaFaultCode,
+    note = "targeted scenario injection",
+  ): void {
+    this.emitVendorFault(robotId, code, note);
   }
 
   /** Drops the vendor connection: COMMS_LOST, then automatic reconnect. */

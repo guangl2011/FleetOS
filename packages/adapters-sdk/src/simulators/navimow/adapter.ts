@@ -1,5 +1,6 @@
 import type { Robot, TelemetrySample } from "@fleetos/core-schema";
 
+import type { NavimowFaultCode } from "./device.js";
 import { ManualClock } from "../../clock.js";
 import type { CommandTicket } from "../../adapter.js";
 import { AdapterNotConnectedError, BaseRobotAdapter } from "../../lifecycle.js";
@@ -81,6 +82,19 @@ export class NavimowMowerAdapter extends BaseRobotAdapter {
     this.emitTransportFault(primary, "simulated MQTT keepalive timeout");
     this.emitVendorFault(secondary, "N04_RAIN_DETECTED");
     this.emitVendorFault(primary, "N05_BLADE_SERVICE_DUE");
+  }
+
+  /**
+   * Targeted scenario driver: emit one vendor-conformant fault on a specific
+   * robot on demand (contract suite, demo harness) — the seeded profiles and
+   * schedules fire on fixed or derived robots only.
+   */
+  injectVendorFault(
+    robotId: string,
+    code: NavimowFaultCode,
+    note = "targeted scenario injection",
+  ): void {
+    this.emitVendorFault(robotId, code, note);
   }
 
   /** Drops the vendor cloud transport: COMMS_LOST, then automatic reconnect. */

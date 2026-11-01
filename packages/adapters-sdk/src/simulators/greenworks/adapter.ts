@@ -1,5 +1,6 @@
 import type { Robot, TelemetrySample } from "@fleetos/core-schema";
 
+import type { GreenworksFaultCode } from "./device.js";
 import { ManualClock } from "../../clock.js";
 import type { CommandTicket } from "../../adapter.js";
 import {
@@ -74,6 +75,19 @@ export class GreenworksMowerAdapter extends BaseRobotAdapter {
     this.emitTransportFault(primary, "simulated gateway link failure");
     this.emitVendorFault(secondary, "E04_RAIN_DELAY");
     this.emitVendorFault(primary, "E05_BLADE_SERVICE_DUE");
+  }
+
+  /**
+   * Targeted scenario driver: emit one vendor-conformant fault on a specific
+   * robot on demand (contract suite, demo harness) — the seeded profiles and
+   * schedules fire on fixed or derived robots only.
+   */
+  injectVendorFault(
+    robotId: string,
+    code: GreenworksFaultCode,
+    note = "targeted scenario injection",
+  ): void {
+    this.emitVendorFault(robotId, code, note);
   }
 
   /** Drops the vendor gateway transport: COMMS_LOST, then automatic reconnect. */

@@ -1,5 +1,6 @@
 import type { Robot, TelemetrySample } from "@fleetos/core-schema";
 
+import type { ScrubberFaultCode } from "./device.js";
 import { ManualClock } from "../../clock.js";
 import type { CommandTicket } from "../../adapter.js";
 import {
@@ -83,6 +84,19 @@ export class ScrubberAdapter extends BaseRobotAdapter {
     this.emitTransportFault(primary, "simulated relay WiFi loss");
     this.emitVendorFault(secondary, "S04_OUTDOOR_HOLD");
     this.emitVendorFault(primary, "S05_BRUSH_WEAR_LIMIT");
+  }
+
+  /**
+   * Targeted scenario driver: emit one vendor-conformant fault on a specific
+   * robot on demand (contract suite, demo harness) — the seeded profiles and
+   * schedules fire on fixed or derived robots only.
+   */
+  injectVendorFault(
+    robotId: string,
+    code: ScrubberFaultCode,
+    note = "targeted scenario injection",
+  ): void {
+    this.emitVendorFault(robotId, code, note);
   }
 
   /** Drops the relay connection: COMMS_LOST, then automatic reconnect. */

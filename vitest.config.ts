@@ -11,7 +11,9 @@ export default defineConfig({
       "apps/**/*.test.tsx",
     ],
     environment: "node",
-    // Console component tests run under jsdom with jest-dom matchers.
-    setupFiles: ["apps/console/src/test/setup.ts"],
+    // Per-file concerns: console component tests declare jsdom via a
+    // @vitest-environment docblock and import ../test/setup themselves —
+    // keeping this config free of console-specific paths so package-level
+    // vitest runs (which walk up to this config) resolve cleanly.
   },
 });
