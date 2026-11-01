@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
+    "packId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "tariff",
+        "weather",
+        "site-rules",
+        "sla",
+        "regulation"
+      ]
+    },
+    "appliesTo": {
+      "type": "object",
+      "properties": {
+        "siteIds": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          }
+        },
+        "robotKinds": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mower",
+              "scrubber",
+              "inspection-rover"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "hard": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "rule": {
+                "type": "string",
+                "const": "time-window"
+              },
+              "constraintId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "forbiddenWindows": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "start": {
+                      "type": "string",
+                      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                    },
+                    "end": {
+                      "type": "string",
+                      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                    },
+                    "daysOfWeek": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 6
+                      }
+                    }
+                  },
+                  "required": [
+                    "start",
+                    "end"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "rule",
+              "constraintId",
+              "description",
+              "forbiddenWindows"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "rule": {
+                "type": "string",
+                "const": "weather-cutoff"
+              },
+              "constraintId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "forbiddenConditions": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "clear",
+                    "light-rain",
+                    "wet-grass"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "rule",
+              "constraintId",
+              "description",
+              "forbiddenConditions"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "soft": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "constraintId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "constraintId",
+          "description",
+          "weight"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "costTerms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "curveId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          },
+          "points": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "pricePerKwh": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "at",
+                "pricePerKwh"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "curveId",
+          "currency",
+          "points"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "humanApproved": {
+          "type": "boolean"
+        },
+        "extractedBy": {
+          "type": "string",
+          "enum": [
+            "human",
+            "ai-draft"
+          ]
+        }
+      },
+      "required": [
+        "origin",
+        "humanApproved"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packId",
+    "source",
+    "appliesTo",
+    "hard",
+    "soft",
+    "costTerms",
+    "provenance"
+  ],
+  "additionalProperties": false,
+  "$id": "constraint-pack.schema.json",
+  "title": "FleetOS Constraint Pack",
+  "description": "A versioned pack of external constraints (energy tariff, weather, site rules, SLA) consumed by the scheduler's constrained optimum, with human-approval provenance."
+}

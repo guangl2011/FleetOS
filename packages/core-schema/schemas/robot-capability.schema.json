@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "taskTypes": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "mow",
+          "scrub",
+          "inspect"
+        ]
+      }
+    },
+    "maxSlopeDeg": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 90
+    },
+    "batteryWh": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "nominalPowerWhPerHour": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "chargeHours": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "weatherTolerance": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "clear",
+          "light-rain",
+          "wet-grass"
+        ]
+      }
+    },
+    "noGoZones": {
+      "type": "boolean"
+    },
+    "remoteResume": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "taskTypes",
+    "maxSlopeDeg",
+    "batteryWh",
+    "nominalPowerWhPerHour",
+    "chargeHours",
+    "weatherTolerance",
+    "noGoZones",
+    "remoteResume"
+  ],
+  "additionalProperties": false,
+  "$id": "robot-capability.schema.json",
+  "title": "FleetOS Robot Capability",
+  "description": "What a robot can do, physically and operationally. The scheduler reads this record, never vendor specifics."
+}
