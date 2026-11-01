@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "productionOrigin": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "fccStatus": {
+      "type": "string",
+      "enum": [
+        "authorized",
+        "waived-update-window",
+        "unauthorized"
+      ]
+    },
+    "firmwareUpdateEligibleUntil": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dataResidency": {
+      "type": "object",
+      "properties": {
+        "telemetryRegion": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{0,31}$"
+        },
+        "allowCrossBorderTelemetry": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "telemetryRegion",
+        "allowCrossBorderTelemetry"
+      ],
+      "additionalProperties": false
+    },
+    "dataFlow": {
+      "type": "object",
+      "properties": {
+        "oemCloud": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "traversedJurisdictions": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          }
+        },
+        "telemetryFieldAllowlist": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-zA-Z][a-zA-Z0-9_.-]{0,63}$"
+          }
+        }
+      },
+      "required": [
+        "oemCloud",
+        "traversedJurisdictions",
+        "telemetryFieldAllowlist"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "productionOrigin",
+    "fccStatus",
+    "firmwareUpdateEligibleUntil",
+    "dataResidency",
+    "dataFlow"
+  ],
+  "additionalProperties": false,
+  "$id": "compliance-block.schema.json",
+  "title": "FleetOS Compliance Block",
+  "description": "Per-device compliance posture: FCC authorization status, firmware-update window, place of production, data residency, and data-flow profile."
+}

@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+    },
+    "robotId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "vendor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "firmwareVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "mower",
+        "scrubber",
+        "inspection-rover"
+      ]
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "taskTypes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mow",
+              "scrub",
+              "inspect"
+            ]
+          }
+        },
+        "maxSlopeDeg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 90
+        },
+        "batteryWh": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "nominalPowerWhPerHour": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "chargeHours": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "weatherTolerance": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "clear",
+              "light-rain",
+              "wet-grass"
+            ]
+          }
+        },
+        "noGoZones": {
+          "type": "boolean"
+        },
+        "remoteResume": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "taskTypes",
+        "maxSlopeDeg",
+        "batteryWh",
+        "nominalPowerWhPerHour",
+        "chargeHours",
+        "weatherTolerance",
+        "noGoZones",
+        "remoteResume"
+      ],
+      "additionalProperties": false
+    },
+    "commands": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "START_TASK",
+          "PAUSE",
+          "RESUME",
+          "DOCK_CHARGE",
+          "RETURN_HOME",
+          "SET_NO_GO_ZONE",
+          "ABORT"
+        ]
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "compliance": {
+      "type": "object",
+      "properties": {
+        "productionOrigin": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "fccStatus": {
+          "type": "string",
+          "enum": [
+            "authorized",
+            "waived-update-window",
+            "unauthorized"
+          ]
+        },
+        "firmwareUpdateEligibleUntil": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dataResidency": {
+          "type": "object",
+          "properties": {
+            "telemetryRegion": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{0,31}$"
+            },
+            "allowCrossBorderTelemetry": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "telemetryRegion",
+            "allowCrossBorderTelemetry"
+          ],
+          "additionalProperties": false
+        },
+        "dataFlow": {
+          "type": "object",
+          "properties": {
+            "oemCloud": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "traversedJurisdictions": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Z]{2}$"
+              }
+            },
+            "telemetryFieldAllowlist": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-zA-Z][a-zA-Z0-9_.-]{0,63}$"
+              }
+            }
+          },
+          "required": [
+            "oemCloud",
+            "traversedJurisdictions",
+            "telemetryFieldAllowlist"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "productionOrigin",
+        "fccStatus",
+        "firmwareUpdateEligibleUntil",
+        "dataResidency",
+        "dataFlow"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "robotId",
+    "vendor",
+    "model",
+    "firmwareVersion",
+    "kind",
+    "capabilities",
+    "commands",
+    "confidence",
+    "compliance"
+  ],
+  "additionalProperties": false,
+  "$id": "robot.schema.json",
+  "title": "FleetOS Robot",
+  "description": "Vendor-neutral registry record for one robot: capability ontology, command allow-list, and compliance block. The scheduler's entire view of a device."
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "siteIds": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+      }
+    },
+    "robotKinds": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "mower",
+          "scrubber",
+          "inspection-rover"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$id": "site-selector.schema.json",
+  "title": "FleetOS Site Selector",
+  "description": "Scope selector for a constraint pack: sites and/or robot kinds; an empty selector applies fleet-wide."
+}
