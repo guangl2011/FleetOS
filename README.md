@@ -5,7 +5,7 @@ FleetOS normalizes heterogeneous service-robot fleets (mowing first, other categ
 one capability ontology, schedules work under uncertainty, and keeps humans in supervision of every
 recovery action.
 
-> Status: scaffold. Domain packages and apps land in follow-up PRs per the approved product spec.
+> Status: scaffold + first domain packages (`core-schema`, `constraints`). Remaining packages and apps land in follow-up PRs per the approved product spec.
 
 ## Monorepo layout
 
@@ -16,11 +16,11 @@ TypeScript ESM pnpm monorepo, Node >= 20.
 ├── apps/            # Deployable applications (land in follow-up PRs)
 │   ├── api/         #   Fastify API with SQLite persistence (planned)
 │   └── console/     #   React (Vite) operator console (planned)
-├── packages/        # Shared libraries (land in follow-up PRs)
-│   ├── core-schema/ #   Capability/telemetry/fault schemas (planned)
+├── packages/        # Shared libraries (core-schema + constraints landed, rest in follow-up PRs)
+│   ├── core-schema/ #   Capability/telemetry/fault schemas (landed)
 │   ├── adapters-sdk/#   Adapter contract + OEM simulators (planned)
 │   ├── world-model/ #   Digital shadow + confidence estimation (planned)
-│   ├── constraints/ #   External constraint packs (planned)
+│   ├── constraints/ #   External constraint packs: validation, versioning, ingestion seam (landed)
 │   ├── device-agents/#  Per-device bounded-autonomy agents (planned)
 │   ├── scheduler/   #   Risk-aware planner + baseline + benchmark (planned)
 │   └── fleet-health/#   Fault classification, audit trail, degraded mode (planned)
