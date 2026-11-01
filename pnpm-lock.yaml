@@ -230,6 +230,28 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@20.19.43)(supports-color@7.2.0)(tsx@4.23.15)
 
+  packages/scheduler:
+    dependencies:
+      '@fleetos/constraints':
+        specifier: workspace:*
+        version: link:../constraints
+      '@fleetos/core-schema':
+        specifier: workspace:*
+        version: link:../core-schema
+      '@fleetos/world-model':
+        specifier: workspace:*
+        version: link:../world-model
+    devDependencies:
+      '@fleetos/adapters-sdk':
+        specifier: workspace:*
+        version: link:../adapters-sdk
+      tsx:
+        specifier: ^4.19.2
+        version: 4.23.15
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.7(@types/node@20.19.43)(supports-color@7.2.0)(tsx@4.23.15)
+
   packages/world-model:
     dependencies:
       '@fleetos/constraints':

@@ -1,6 +1,7 @@
 node_modules/
 dist/
 coverage/
+packages/scheduler/bench/reports/
 *.log
 .env
 .env.*

@@ -5,7 +5,8 @@
   "description": "FleetOS adapter SDK — RobotAdapter contract, lifecycle base, shared contract test harness, and reference in-memory adapter",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./contract": "./src/contract/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
