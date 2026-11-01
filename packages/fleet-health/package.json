@@ -1,0 +1,24 @@
+{
+  "name": "@fleetos/fleet-health",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetOS fleet health — fault severity classification (adapter faults + device-agent diagnoses), the operator exception queue, the append-only audit-trail store, and degraded-mode logic (comms loss marks robots DEGRADED and excludes their telemetry)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fleetos/core-schema": "workspace:*",
+    "@fleetos/device-agents": "workspace:*",
+    "@fleetos/world-model": "workspace:*",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@fleetos/adapters-sdk": "workspace:*",
+    "vitest": "^3.2.4"
+  }
+}
