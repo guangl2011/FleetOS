@@ -8,7 +8,10 @@ package below is required to deliver the tests this plan names for it. Until a p
 lands, its test directory does not exist yet; the CI gate column states which workflow
 gates that class the moment it does. Every CI gate named in this document maps to a real
 workflow file in `.github/workflows/` — the doc-lint check described in §8 enforces both
-this plan's completeness and that mapping in CI.
+this plan's completeness and that mapping in CI. The shipped-MVP validation plan built
+on this document — per-package verification points, the end-to-end demo path, benchmark
+re-runs, the manual console QA checklist, and the release-candidate gate — lives at
+[`mvp-test-plan.md`](./mvp-test-plan.md).
 
 ## 0. Test-class summary
 
